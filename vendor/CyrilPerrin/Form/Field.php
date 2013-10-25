@@ -31,10 +31,10 @@ abstract class Field
     /** @var $_after string after */
     protected $_after = '';
     
-    /** @var $_isSubmitted bool submitted element ? */
+    /** @var $_isSubmitted bool is submitted ? */
     protected $_isSubmitted = false;
     
-    /** @var $_isValid bool valid element ? */
+    /** @var $_isValid bool is valid ? */
     protected $_isValid = false;
     
     /** @var $_callback string callback */
@@ -77,8 +77,8 @@ abstract class Field
     }
     
     /**
-     * Know if element is submitted
-     * @return bool submitted element ?
+     * Know if is submitted
+     * @return bool is submitted ?
      */
     public function isSubmitted()
     {
@@ -95,7 +95,7 @@ abstract class Field
     }
     
     /**
-     * Get element name
+     * Get name
      * @return string name
      */
     public function getName()
@@ -115,8 +115,8 @@ abstract class Field
     }
     
     /**
-     * Know if element is valid
-     * @return bool valid element ?
+     * Know if is valid
+     * @return bool is valid ?
      */
     public function isValid()
     {
@@ -151,7 +151,7 @@ abstract class Field
     }
     
     /**
-     * Validate element
+     * Validate
      * @param string method used by form
      */
     abstract public function validate($method);

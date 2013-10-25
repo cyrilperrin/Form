@@ -17,16 +17,16 @@ class Form
     /** @var $_action string action */
     private $_action;
     
-    /** @var $_elements array elements */
-    private $_elements = array();
+    /** @var $_fields array fields */
+    private $_fields = array();
     
-    /** @var $_required array required elements */
+    /** @var $_required array required fields */
     private $_required = array();
     
-    /** @var $_group array group elements */
+    /** @var $_group array group fields */
     private $_group = array();
     
-    /** @var $_file bool file input in elements ? */
+    /** @var $_file bool file input in fields ? */
     private $_file = false;
     
     /** @var $_isSubmitted bool submitted form ? */
@@ -38,7 +38,7 @@ class Form
     /** @var $_attributes string attributes */
     private $_attributes = null;
     
-    /** @var $_callback string callback to valid all elements */
+    /** @var $_callback string callback to valid all fields */
     private $_callback = null;
     
     /** @var $_renderer IFormRenderer form renderer */
@@ -53,17 +53,17 @@ class Form
     /** @var $_errorEnd string error messages end */
     private static $_errorEnd = '</span>';
     
-    /** @var $_msgRequired string message displayed when a element is not submitted */
+    /** @var $_msgRequired string message displayed when a field is not submitted */
     private static $_msgRequired = 'Required';
     
-    /** @var $_msgInvalid string message displayed when a element is not valid */
+    /** @var $_msgInvalid string message displayed when a field is not valid */
     private static $_msgInvalid = 'Invalid';
     
     /**
      * Constructor
      * @param $method string method
      * @param $action string action
-     * @param $callback string callback to valid element
+     * @param $callback string callback to valid field
      * @param $renderer IFormRenderer form renderer
      */
     public function __construct($method=Form::METHOD_POST,$action='#',
@@ -103,33 +103,33 @@ class Form
     }
     
     /**
-     * Return elements
-     * @return array elements
+     * Return fields
+     * @return array fields
      */
-    public function getElements()
+    public function getFields()
     {
-        return $this->_elements;
+        return $this->_fields;
     }
     
     /**
-     * Get error for an element
-     * @param $element Form|Field element
+     * Get error for an field
+     * @param $field Form|Field field
      * @return string error
      */
-    public function getError($element)
+    public function getError($field)
     {
-        if ($element instanceof Form) {
+        if ($field instanceof Form) {
             if ($this->_error != null) {
                 return self::$_errorStart.$this->_error.self::$_errorEnd;
             }
             return null;
         }
         if ($this->_isSubmitted) {
-            if ($this->_required[$element->getId()] && !$element->isSubmitted()) {
+            if ($this->_required[$field->getId()] && !$field->isSubmitted()) {
                 return self::$_errorStart.self::$_msgRequired.self::$_errorEnd;
-            } else if ($element->isSubmitted() && !$element->isValid()) {
-                if ($element->getError() != null) {
-                    $error = $element->getError();
+            } else if ($field->isSubmitted() && !$field->isValid()) {
+                if ($field->getError() != null) {
+                    $error = $field->getError();
                 } else {
                     $error = self::$_msgInvalid;
                 }
@@ -140,14 +140,14 @@ class Form
     }
     
     /**
-     * Get element group
-     * @param $element Field element
-     * @return string|array element group
+     * Get field group
+     * @param $field Field field
+     * @return string|array field group
      */
-    public function getGroup(Field $element)
+    public function getGroup(Field $field)
     {
-        if (isset($this->_group[$element->getId()])) {
-           return $this->_group[$element->getId()];
+        if (isset($this->_group[$field->getId()])) {
+           return $this->_group[$field->getId()];
         }
         return null;
     }
@@ -201,36 +201,36 @@ class Form
     }
     
     /**
-     * Add an element
-     * @param $element Field element to add
-     * @param $required bool required element ?
-     * @param $group string|array element group
-     * @return Field element added
+     * Add an field
+     * @param $field Field field to add
+     * @param $required bool required field ?
+     * @param $group string|array field group
+     * @return Field field added
      */
-    public function add(Field $element,$required=true,$group=null)
+    public function add(Field $field,$required=true,$group=null)
     {
         // File input ?
-        if ($element instanceof Field_File) {
+        if ($field instanceof Field_File) {
             $this->_file = true;
         }
         
-        // Add element, required and group to arrays
-        $this->_elements[$element->getId()] = $element;
-        $this->_required[$element->getId()] = $required;
+        // Add field, required and group to arrays
+        $this->_fields[$field->getId()] = $field;
+        $this->_required[$field->getId()] = $required;
         if (is_null($group) || is_array($group)) {
-            $this->_group[$element->getId()] = $group;
+            $this->_group[$field->getId()] = $group;
         } else {
-            $this->_group[$element->getId()] = array($group);
+            $this->_group[$field->getId()] = array($group);
         }
         
-        // Return element
-        return $element;
+        // Return field
+        return $field;
     }
     
     /**
      * Add HTML content
      * @param $html string HTML content
-     * @param $group string|array element group
+     * @param $group string|array field group
      */
     public function addHTML($html,$group=null)
     {
@@ -238,13 +238,13 @@ class Form
     }
     
     /**
-     * Know if an element is required
-     * @param $element Field element
-     * @return bool element is required ?
+     * Know if an field is required
+     * @param $field Field field
+     * @return bool field is required ?
      */
-    public function isRequired(Field $element)
+    public function isRequired(Field $field)
     {
-        return isset($this->_group[$element->getId()]);
+        return isset($this->_group[$field->getId()]);
     }
     
     /**
@@ -277,9 +277,9 @@ class Form
         
         // Validate each button
         $nbButtons = 0;
-        foreach ($this->_elements as $key => $element) {
-            if ($element instanceof Field_Submit) {
-                $element->validate($this->_method);
+        foreach ($this->_fields as $key => $field) {
+            if ($field instanceof Field_Submit) {
+                $field->validate($this->_method);
                 $nbButtons++;
             }
         }
@@ -287,10 +287,10 @@ class Form
         // Check if there is buttons
         if ($nbButtons != 0) {
             // Check if a button has been submitted
-            foreach ($this->_elements as $element) {
+            foreach ($this->_fields as $field) {
                 if (!$isSubmitted) {
-                    $isSubmitted = $element instanceof Field_Submit &&
-                                   $element->isValid();
+                    $isSubmitted = $field instanceof Field_Submit &&
+                                   $field->isValid();
                 }
             }
         } else {
@@ -303,22 +303,22 @@ class Form
         // Initialze isValid variable
         $isValid = $isSubmitted;
                 
-        // Check if all elements are submitted and valid
+        // Check if all fields are submitted and valid
         if ($isSubmitted) {
-            // Validate each elements
-            foreach ($this->_elements as $element) {
-                if (!($element instanceof Field_Submit)) {
-                    $element->validate($this->_method);
+            // Validate each fields
+            foreach ($this->_fields as $field) {
+                if (!($field instanceof Field_Submit)) {
+                    $field->validate($this->_method);
                 }
             }
             
-            // Check if all elements are valid
-            foreach ($this->_elements as $element) {
+            // Check if all fields are valid
+            foreach ($this->_fields as $field) {
                 if ($isValid) {
-                    $isValid = $element instanceof Field_Submit ||
-                               $element->isSubmitted() && $element->isValid() ||
-                               !$element->isSubmitted() &&
-                               !$this->_required[$element->getId()];
+                    $isValid = $field instanceof Field_Submit ||
+                               $field->isSubmitted() && $field->isValid() ||
+                               !$field->isSubmitted() &&
+                               !$this->_required[$field->getId()];
                 }
             }
             
@@ -326,7 +326,7 @@ class Form
             if ($this->_callback != null && $isValid) {
                 $isValid = call_user_func_array(
                     $this->_callback,
-                    array_merge($this->_elements, array($this))
+                    array_merge($this->_fields, array($this))
                 );
             }
         }
@@ -344,15 +344,15 @@ class Form
     }
 
     /**
-     * Get an element by name
+     * Get an field by name
      * @param $name string name
-     * @return Field element
+     * @return Field field
      */
     public function __get($name)
     {
-        foreach ($this->_elements as $element) {
-            if ($element->getName() == $name) {
-                return $element;
+        foreach ($this->_fields as $field) {
+            if ($field->getName() == $name) {
+                return $field;
             }
         }
         return null;
@@ -388,7 +388,7 @@ class Form
         
     /**
      * Set message required
-     * @param $msg string message displayed when a element is not submitted
+     * @param $msg string message displayed when a field is not submitted
      */
     public static function setMsgRequired($msg)
     {
@@ -397,7 +397,7 @@ class Form
     
     /**
      * Set message required
-     * @param $msg string message displayed when a element is not valid
+     * @param $msg string message displayed when a field is not valid
      */
     public static function setMsgInvalid($msg)
     {

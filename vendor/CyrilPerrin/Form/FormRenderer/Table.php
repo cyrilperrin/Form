@@ -9,18 +9,18 @@ class FormRenderer_Table extends FormRenderer_Abstract
 {
 
     /**
-     * @see FormRenderer_Abstract#renderElement(Form,Field)
+     * @see FormRenderer_Abstract#renderField(Form,Field)
      */
-    protected function renderElement(Form $form,Field $element)
+    protected function renderField(Form $form,Field $field)
     {
         $string = '<tr>';
-        if ($element->getDescription() != null) {
+        if ($field->getDescription() != null) {
             $string .= '<td style="vertical-align:top;">'.
-                       $element->getDescription().' :</td><td>';
+                       $field->getDescription().' :</td><td>';
         } else {
             $string .= '<td colspan="2">';
         }
-        $string .= $element->__toString().' '.$form->getError($element).'</td>'.
+        $string .= $field->__toString().' '.$form->getError($field).'</td>'.
                    '</tr>'."\n";
         return $string;
     }

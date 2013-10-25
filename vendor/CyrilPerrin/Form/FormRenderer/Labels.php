@@ -8,16 +8,16 @@ namespace CyrilPerrin\Form;
 class FormRenderer_Labels extends FormRenderer_Abstract
 {
     /**
-     * @see FormRenderer_Abstract#renderElement(Form,Field)
+     * @see FormRenderer_Abstract#renderField(Form,Field)
      */
-    protected function renderElement(Form $form,Field $element)
+    protected function renderField(Form $form,Field $field)
     {
         $string = '<div>';
-        if ($element->getDescription() != null) {
-            $string .= '<label>'.$element->getDescription().
+        if ($field->getDescription() != null) {
+            $string .= '<label>'.$field->getDescription().
                        '&nbsp;:&nbsp;</label> ';
         }
-        $string .= $element->__toString().' '.$form->getError($element).
+        $string .= $field->__toString().' '.$form->getError($field).
                   '</div>'."\n";
         return $string;
     }

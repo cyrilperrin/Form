@@ -13,7 +13,7 @@ class Field_Sequence extends Field
     /** @var $_callback callback fields provider */
     private $_callback;
     
-    /** @var $_fields array form elements */
+    /** @var $_fields array fields */
     private $_fields = array();
     
     /**
@@ -49,15 +49,15 @@ class Field_Sequence extends Field
             $this->_isValid = true;
             $this->_isSubmitted = false;
             
-            // Instanciate form elements
+            // Instanciate fields
             foreach ($names as $name) {
                 // Get field
                 $field = call_user_func($this->_callback, $name);
                 
-                // Save form element
+                // Save field
                 $this->_fields[$name] = $field;
                 
-                // Validate form element
+                // Validate field
                 $field->validate($method);
                 
                 // Is valid/Is submitted ?

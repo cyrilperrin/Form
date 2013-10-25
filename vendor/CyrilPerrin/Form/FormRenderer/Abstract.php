@@ -20,21 +20,21 @@ abstract class FormRenderer_Abstract implements IFormRenderer
             $string .= $error."\n";
         }
 
-        // Display hidden elements
-        foreach ($form->getElements() as $element) {
-            if ($element instanceof Field_Input_Hidden) {
-                $string .= $element->__toString();
+        // Display hidden fields
+        foreach ($form->getFields() as $field) {
+            if ($field instanceof Field_Input_Hidden) {
+                $string .= $field->__toString();
             }
         }
 
-        // Group elements
+        // Group fields
         $groups = array();
-        foreach ($form->getElements() as $element) {
-            // Add element to group
-            if (!($element instanceof Field_Input_Hidden) &&
-                !($element instanceof Field_Sequence) &&
-                !($element instanceof Field_Submit) &&
-                ($names = $form->getGroup($element)) !== null) {
+        foreach ($form->getFields() as $field) {
+            // Add field to group
+            if (!($field instanceof Field_Input_Hidden) &&
+                !($field instanceof Field_Sequence) &&
+                !($field instanceof Field_Submit) &&
+                ($names = $form->getGroup($field)) !== null) {
                 $group =& $groups;
                 while (count($names)) {
                     $name = array_shift($names);
@@ -43,29 +43,29 @@ abstract class FormRenderer_Abstract implements IFormRenderer
                     }
                     $group =& $group[$name];
                 }
-                $group[] = $element;
+                $group[] = $field;
             }
         }
 
         // List started ?
         $startedList = false;
 
-        // Display elements
+        // Display fields
         $done = array();
-        foreach ($form->getElements() as $element) {
-            if (!($element instanceof Field_Input_Hidden) &&
-                !($element instanceof Field_Sequence) &&
-                !($element instanceof Field_Submit)) {
-                // Display element or group
-                if (($names = $form->getGroup($element)) === null) {
+        foreach ($form->getFields() as $field) {
+            if (!($field instanceof Field_Input_Hidden) &&
+                !($field instanceof Field_Sequence) &&
+                !($field instanceof Field_Submit)) {
+                // Display field or group
+                if (($names = $form->getGroup($field)) === null) {
                     // Start list
                     if (!$startedList) {
                         $string .= $this->getListStart();
                         $startedList = true;
                     }
                         
-                    // Display element
-                    $string .= $this->renderElement($form, $element);
+                    // Display field
+                    $string .= $this->renderField($form, $field);
                 } else {
                     // Get group name
                     $name = array_shift($names);
@@ -92,10 +92,10 @@ abstract class FormRenderer_Abstract implements IFormRenderer
             $string .= $this->getListEnd();
         }
 
-        // Display submit elements
-        foreach ($form->getElements() as $element) {
-            if ($element instanceof Field_Submit) {
-                $string .= $element->__toString();
+        // Display submit fields
+        foreach ($form->getFields() as $field) {
+            if ($field instanceof Field_Submit) {
+                $string .= $field->__toString();
             }
         }
 
@@ -110,10 +110,10 @@ abstract class FormRenderer_Abstract implements IFormRenderer
      * Render a group in HTML
      * @param $form Form form
      * @param $name string group name
-     * @param $elements array goup elements
+     * @param $fields array goup fields
      * @return string group in HTML
      */
-    private function renderGroup($form,$name,$elements)
+    private function renderGroup($form,$name,$fields)
     {
         // Init string
         $string = '';
@@ -126,10 +126,10 @@ abstract class FormRenderer_Abstract implements IFormRenderer
         // List started ?
         $startedList = false;
          
-        // Display group elements
-        foreach ($elements as $key => $element) {
-            // Display element or group
-            if (is_array($element)) {
+        // Display group fields
+        foreach ($fields as $key => $field) {
+            // Display field or group
+            if (is_array($field)) {
                 // Close list
                 if ($startedList) {
                     $string .= $this->getListEnd();
@@ -137,7 +137,7 @@ abstract class FormRenderer_Abstract implements IFormRenderer
                 }
 
                 // Display group
-                $string .= $this->renderGroup($form, $key, $element);
+                $string .= $this->renderGroup($form, $key, $field);
             } else {
                 // Start list
                 if (!$startedList) {
@@ -145,9 +145,9 @@ abstract class FormRenderer_Abstract implements IFormRenderer
                     $startedList = true;
                 }
 
-                // Display element
-                $string .= $this->renderElement(
-                    $form, $element, is_string($name)
+                // Display field
+                $string .= $this->renderField(
+                    $form, $field, is_string($name)
                 );
             }
         }
@@ -165,12 +165,12 @@ abstract class FormRenderer_Abstract implements IFormRenderer
     }
 
     /**
-     * Render an element in HTML
+     * Render a field in HTML
      * @param $form Form form
-     * @param $element Field element
-     * @return string element in HTML
+     * @param $field Field field
+     * @return string field in HTML
      */
-    abstract protected function renderElement(Form $form,Field $element);
+    abstract protected function renderField(Form $form,Field $field);
 
     /**
      * Get list start
