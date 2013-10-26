@@ -66,7 +66,7 @@ class Form
      * @param $callback string callback to valid field
      * @param $renderer IFormRenderer form renderer
      */
-    public function __construct($method=Form::METHOD_POST,$action='#',
+    public function __construct($method=self::METHOD_POST,$action='#',
         $callback=null,IFormRenderer $renderer=null)
     {
         // Set attributes
