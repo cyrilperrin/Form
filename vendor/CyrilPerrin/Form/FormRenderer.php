@@ -3,12 +3,14 @@
 namespace CyrilPerrin\Form;
 
 /**
- * Abstract form renderer
+ * Class to extend to be considered as a form renderer
  */
-abstract class FormRenderer_Abstract implements IFormRenderer
+abstract class FormRenderer
 {
     /**
-     * @see IFormRenderer#renderForm(Form)
+     * Render a form in HTML
+     * @param $form Form form
+     * @return string form in HTML
      */
     public function renderForm(Form $form)
     {

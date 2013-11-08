@@ -5,11 +5,11 @@ namespace CyrilPerrin\Form;
 /**
  * Form renderer with table
  */
-class FormRenderer_Table extends FormRenderer_Abstract
+class FormRenderer_Table extends FormRenderer
 {
 
     /**
-     * @see FormRenderer_Abstract#renderField(Form,Field)
+     * @see FormRenderer#renderField(Form,Field)
      */
     protected function renderField(Form $form,Field $field)
     {
@@ -26,7 +26,7 @@ class FormRenderer_Table extends FormRenderer_Abstract
     }
 
     /**
-     * @see FormRenderer_Abstract#getListStart()
+     * @see FormRenderer#getListStart()
      */
     protected function getListStart()
     {
@@ -34,7 +34,7 @@ class FormRenderer_Table extends FormRenderer_Abstract
     }
 
     /**
-     * @see FormRenderer_Abstract#getListEnd()
+     * @see FormRenderer#getListEnd()
      */
     protected function getListEnd()
     {

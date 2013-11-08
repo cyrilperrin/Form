@@ -41,7 +41,7 @@ class Form
     /** @var $_callback string callback to valid all fields */
     private $_callback = null;
     
-    /** @var $_renderer IFormRenderer form renderer */
+    /** @var $_renderer FormRenderer form renderer */
     private $_renderer = null;
     
     /** @var $_error string error message */
@@ -64,10 +64,10 @@ class Form
      * @param $method string method
      * @param $action string action
      * @param $callback string callback to valid field
-     * @param $renderer IFormRenderer form renderer
+     * @param $renderer FormRenderer form renderer
      */
     public function __construct($method=self::METHOD_POST,$action='#',
-        $callback=null,IFormRenderer $renderer=null)
+        $callback=null,FormRenderer $renderer=null)
     {
         // Set attributes
         $this->_method = $method;
@@ -172,9 +172,9 @@ class Form
     
     /**
      * Set renderer
-     * @param $renderer IFormRenderer form renderer
+     * @param $renderer FormRenderer form renderer
      */
-    public function setRenderer(IFormRenderer $renderer)
+    public function setRenderer(FormRenderer $renderer)
     {
         $this->_renderer = $renderer;
     }
