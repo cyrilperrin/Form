@@ -11,16 +11,13 @@ class Field_Date extends Field
     const FORMAT_YYYY_MM_DD = 1;
     const FORMAT_DD_MM_YYYY = 2;
     
-    /** @var $_timestamp int timestamp */
-    private $_timestamp;
-    
-    /** @var $_selectDay Field_Input_Select day */
+    /** @var $_selectDay Field_Input_Select day select */
     private $_selectDay;
     
-    /** @var $_selectMonth Field_Input_Select month */
+    /** @var $_selectMonth Field_Input_Select month select */
     private $_selectMonth;
     
-    /** @var $_selectYear Field_Input_Select year */
+    /** @var $_selectYear Field_Input_Select year select */
     private $_selectYear;
     
     /** @var $_min int minimum timestamp */
@@ -108,17 +105,17 @@ class Field_Date extends Field
         
         // Is submitted ?
         $this->_isSubmitted = $this->_selectDay->isSubmitted() &&
-                             $this->_selectDay->getValue() != 0 &&
-                             $this->_selectMonth->isSubmitted() &&
-                             $this->_selectMonth->getValue() != 0 &&
-                             $this->_selectYear->isSubmitted() &&
-                             $this->_selectYear->getValue() != 0;
+                              $this->_selectDay->getValue() != 0 &&
+                              $this->_selectMonth->isSubmitted() &&
+                              $this->_selectMonth->getValue() != 0 &&
+                              $this->_selectYear->isSubmitted() &&
+                              $this->_selectYear->getValue() != 0;
         if (!$this->_isSubmitted) {
             return false;
         }
         
         // Is valid ?
-        $this->_isValid =  $this->_selectDay->isValid() &&
+        $this->_isValid = $this->_selectDay->isValid() &&
                           $this->_selectMonth->isValid() &&
                           $this->_selectYear->isValid();
         if (!$this->_isValid) {
@@ -135,23 +132,26 @@ class Field_Date extends Field
             return false;
         }
         
-        // Make timestamp
-        $this->_timestamp = mktime(
-            0, 0, 0, $this->_selectMonth->getValue(),
-            $this->_selectDay->getValue(), $this->_selectYear->getValue()
-        );
-        
-        // Check if periode does not exceed min and max timestamps
-        if ($this->_max !== null) {
-            $this->_isValid = $this->_max >= $this->_timestamp;
-            if (!$this->_isValid) {
-                return false;
+        // Check if min or max timestamps are defined
+        if ($this->_max !== null || $this->_min !== null) {
+            // Make timestamp
+            $timestamp = mktime(
+                0, 0, 0, $this->_selectMonth->getValue(),
+                $this->_selectDay->getValue(), $this->_selectYear->getValue()
+            );
+            
+            // Check if periode does not exceed min and max timestamps
+            if ($this->_max !== null) {
+                $this->_isValid = $this->_max >= $timestamp;
+                if (!$this->_isValid) {
+                    return false;
+                }
             }
-        }
-        if ($this->_min !== null) {
-            $this->_isValid =  $this->_timestamp >= $this->_max;
-            if (!$this->_isValid) {
-                return false;
+            if ($this->_min !== null) {
+                $this->_isValid =  $timestamp >= $this->_max;
+                if (!$this->_isValid) {
+                    return false;
+                }
             }
         }
     }
@@ -162,7 +162,46 @@ class Field_Date extends Field
      */
     public function getTimestamp()
     {
-        return $this->_timestamp;
+        return mktime(
+            0, 0, 0, $this->_selectMonth->getValue(),
+            $this->_selectDay->getValue(), $this->_selectYear->getValue()
+        );
+    }
+
+    /**
+     * Get day select
+     * @return Field_Input_Select
+     */
+    public function getSelectDay()
+    {
+        return $this->_selectDay;
+    }
+    
+    /**
+     * Get month select
+     * @return Field_Input_Select
+     */
+    public function getSelectMonth()
+    {
+        return $this->_selectMonth;
+    }
+    
+    /**
+     * Get year select
+     * @return Field_Input_Select
+     */
+    public function getSelectYear()
+    {
+        return $this->_selectYear;
+    }
+    
+    /**
+     * Set used format
+     * @param format int used format
+     */
+    public function setFormat($format)
+    {
+        $this->_format = $format;
     }
     
     /**

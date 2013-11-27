@@ -29,16 +29,15 @@ class Field_Input_Text extends Field_Input
      * @param $name string name
      * @param $description string description
      * @param $type int type
-     * @param $inputSize int|array size of text input : an integer if monoline,
-     *                             an array if multiline like array(cols,rows)
+     * @param $inputSize int|array size of text input
      * @param $textSize int maximal number of caracters
-     * @param $init string init value 
-     * @param $placeholder string placeholder 
+     * @param $init string init value
+     * @param $placeholder string placeholder
      * @param $attributes string initial HTML attributes
      */
     public function __construct($name,$description=null,
-        $type=Field_Input_Text::TYPE_MONOLINE,$inputSize=null,$textSize=null,$init=null,
-        $placeholder=null,$attributes=null)
+        $type=Field_Input_Text::TYPE_MONOLINE,$inputSize=null,$textSize=null,
+        $init=null,$placeholder=null,$attributes=null)
     {
         // Call parent constructor
         parent::__construct($name, $description, $attributes, $init);
@@ -73,6 +72,42 @@ class Field_Input_Text extends Field_Input
     {
         // Check if value is a string
         return parent::setValue($value) && is_string($value);
+    }
+    
+    /**
+     * Set type
+     * @param $type int type
+     */
+    public function setType($type)
+    {
+        $this->_type = $type;
+    }
+    
+    /**
+     * Set input size
+     * @param $inputSize int|array size of text input
+     */
+    public function setInputSize($inputSize)
+    {
+        $this->_inputSize = $inputSize;
+    }
+    
+    /**
+     * Set text size
+     * @param $textSize int maximal number of caracters
+     */
+    public function setTextSize($textSize)
+    {
+        $this->_textSize = $textSize;
+    }
+    
+    /**
+     * Set placeholder
+     * @param $placeholder string placeholder
+     */
+    public function setPlaceholder($placeholder)
+    {
+        $this->_placeholder = $placeholder;
     }
     
     /**

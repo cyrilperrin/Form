@@ -248,6 +248,42 @@ class Field_File extends Field
     }
     
     /**
+     * Set input size
+     * @param $inputSize int size of file input
+     */
+    public function setInputSize($inputSize)
+    {
+        $this->_inputSize = $inputSize;
+    }
+    
+    /**
+     * Set max file size
+     * @param $maxFileSize int maximal size of file in bytes
+     */
+    public function setMaxFileSize($maxFileSize)
+    {
+        $this->_maxFileSize = $maxFileSize;
+    }
+    
+    /**
+     * Set accepted extensions
+     * @param $acceptedExtensions array valid extensions
+     */
+    public function setAcceptedExtensions($acceptedExtensions)
+    {
+        $this->_acceptedExtensions = $acceptedExtensions;
+    }
+    
+    /**
+     * Set accepted mimetypes
+     * @param $acceptedMimetypes array valid mime types
+     */
+    public function setAcceptedMimetypes($acceptedMimetypes)
+    {
+        $this->_acceptedMimetypes = $acceptedMimetypes;
+    }
+    
+    /**
      * @see Field::__toString()
      */
     public function __toString()

@@ -28,9 +28,10 @@ $lastname = $form->add(new Field_Input_Text('lastname', 'Lastname'));
 $birthday = $form->add(
     new Field_Date('birthday', 'Birthday', null, null, time())
 );
+$genders = array('male','female');
 $gender = $form->add(
     new Field_Input_Select(
-        'gender', array('male','female'), 'Gender', false, false
+        'gender', $genders, 'Gender', false, false
     )
 );
 $email = $form->add(new Field_Input_Text('email', 'Email'));
@@ -80,7 +81,7 @@ if ($form->validate()) {
             '<li>Firstname : ',$firstname->getValue(),'</li>',
             '<li>Lastname : ',$lastname->getValue(),'</li>',
             '<li>Birthday : ',date('Y-m-d', $birthday->getTimestamp()),'</li>',
-            '<li>Gender : ',$gender->getValue(),'</li>',
+            '<li>Gender : ',$genders[$gender->getValue()],'</li>',
             '<li>Email : <a href="mailto:',$email->getValue(),'">',
                 $email->getValue(),
             '</a></li>',

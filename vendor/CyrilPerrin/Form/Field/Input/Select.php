@@ -106,6 +106,39 @@ class Field_Input_Select extends Field_Input
     }
     
     /**
+     * Set is multiple
+     * @param $isMultiple bool multiple select ?
+     */
+    public function setIsMultiple($isMultiple)
+    {
+        // Set is multiple
+        $this->_isMultiple = $isMultiple;
+        
+        // Initialize initial value
+        if (empty($this->_value)) {
+            $this->_value = !$isMultiple ? null : array();
+        }
+    }
+    
+    /**
+     * Set is list
+     * @param $isList bool select as list ?
+     */
+    public function setIsList($isList)
+    {
+        $this->_isList = $isList;
+    }
+    
+    /**
+     * Set input size
+     * @param $inputSize int size of select input
+     */
+    public function setInputSize($inputSize)
+    {
+        $this->_inputSize = $inputSize;
+    }
+    
+    /**
      * @see Field::__toString()
      */
     public function __toString()
