@@ -1,11 +1,13 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field\File;
+
+use CyrilPerrin\Form\Field\File;
 
 /**
  * Form image
  */
-class Field_File_Image extends Field_File
+class Image extends File
 {
     /** @var $_width int width */
     private $_width;
@@ -93,7 +95,7 @@ class Field_File_Image extends Field_File
     }
     
     /**
-     * @see Field_File::validate($method)
+     * @see File::validate($method)
      */
     public function validate($method)
     {

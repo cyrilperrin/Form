@@ -1,11 +1,14 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Form;
 
 /**
  * Form captcha
  */
-class Field_Captcha extends Field
+class Captcha extends Field
 {
     /** @var $_publicKey string public key */
     private $_publicKey;
@@ -86,7 +89,7 @@ class Field_Captcha extends Field
         // Open socket
         $fs = @fsockopen('www.google.com', 80, $errno, $errstr, 10);
         if ($fs == false) {
-            throw new Exception('Could not open socket');
+            throw new \Exception('Could not open socket');
         }
         
         // Write

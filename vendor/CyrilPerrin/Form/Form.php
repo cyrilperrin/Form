@@ -2,6 +2,11 @@
 
 namespace CyrilPerrin\Form;
 
+use CyrilPerrin\Form\Field\File;
+use CyrilPerrin\Form\Field\Html;
+use CyrilPerrin\Form\Field\Submit;
+use CyrilPerrin\Form\FormRenderer\Table;
+
 /**
  * Form
  */
@@ -74,7 +79,7 @@ class Form
         $this->_action = $action;
         $this->_callback = $callback;
         if ($renderer === null) {
-            $this->_renderer = new FormRenderer_Table();
+            $this->_renderer = new Table();
         } else {
             $this->_renderer = $renderer;
         }
@@ -210,7 +215,7 @@ class Form
     public function add(Field $field,$required=true,$group=null)
     {
         // File input ?
-        if ($field instanceof Field_File) {
+        if ($field instanceof File) {
             $this->_file = true;
         }
         
@@ -234,7 +239,7 @@ class Form
      */
     public function addHTML($html,$group=null)
     {
-        $this->add(new Field_Html($html), false, $group);
+        $this->add(new Html($html), false, $group);
     }
     
     /**
@@ -278,7 +283,7 @@ class Form
         // Validate each button
         $nbButtons = 0;
         foreach ($this->_fields as $key => $field) {
-            if ($field instanceof Field_Submit) {
+            if ($field instanceof Submit) {
                 $field->validate($this->_method);
                 $nbButtons++;
             }
@@ -289,7 +294,7 @@ class Form
             // Check if a button has been submitted
             foreach ($this->_fields as $field) {
                 if (!$isSubmitted) {
-                    $isSubmitted = $field instanceof Field_Submit &&
+                    $isSubmitted = $field instanceof Submit &&
                                    $field->isValid();
                 }
             }
@@ -307,7 +312,7 @@ class Form
         if ($isSubmitted) {
             // Validate each fields
             foreach ($this->_fields as $field) {
-                if (!($field instanceof Field_Submit)) {
+                if (!($field instanceof Submit)) {
                     $field->validate($this->_method);
                 }
             }
@@ -315,7 +320,7 @@ class Form
             // Check if all fields are valid
             foreach ($this->_fields as $field) {
                 if ($isValid) {
-                    $isValid = $field instanceof Field_Submit ||
+                    $isValid = $field instanceof Submit ||
                                $field->isSubmitted() && $field->isValid() ||
                                !$field->isSubmitted() &&
                                !$this->_required[$field->getId()];

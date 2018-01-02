@@ -1,11 +1,13 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
 
 /**
  * Form file
  */
-class Field_File extends Field
+class File extends Field
 {
     /** @var $_path string path */
     protected $_path = null;

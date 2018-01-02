@@ -1,11 +1,14 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field\Input;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Field\Input;
 
 /**
  * Form hidden
  */
-class Field_Input_Hidden extends Field_Input
+class Hidden extends Input
 {
     /**
      * Constructor
@@ -18,7 +21,7 @@ class Field_Input_Hidden extends Field_Input
     }
     
     /**
-     * @see Field_Input::setValue($value)
+     * @see Input::setValue($value)
      */
     public function setValue($value)
     {

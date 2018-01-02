@@ -5,15 +5,13 @@
 
 // Used namespaces
 use CyrilPerrin\Form\Form;
-use CyrilPerrin\Form\Field_Input_Text;
-use CyrilPerrin\Form\Field_Input_Select;
-use CyrilPerrin\Form\Field_Input_Hidden;
-use CyrilPerrin\Form\Field_File;
-use CyrilPerrin\Form\Field_File_Image;
-use CyrilPerrin\Form\Field_Captcha;
-use CyrilPerrin\Form\Field_Date;
-use CyrilPerrin\Form\Field_Html;
-use CyrilPerrin\Form\Field_Submit;
+use CyrilPerrin\Form\Field\Date;
+use CyrilPerrin\Form\Field\File;
+use CyrilPerrin\Form\Field\Submit;
+use CyrilPerrin\Form\Field\File\Image;
+use CyrilPerrin\Form\Field\Input\Hidden;
+use CyrilPerrin\Form\Field\Input\Select;
+use CyrilPerrin\Form\Field\Input\Text;
 
 // Require autoload
 require('autoload.php');
@@ -23,38 +21,38 @@ set_include_path(get_include_path().PATH_SEPARATOR.__DIR__.'/../vendor');
 
 // Use
 $form = new Form();
-$firstname = $form->add(new Field_Input_Text('firstname', 'Firstname'));
-$lastname = $form->add(new Field_Input_Text('lastname', 'Lastname'));
+$firstname = $form->add(new Text('firstname', 'Firstname'));
+$lastname = $form->add(new Text('lastname', 'Lastname'));
 $birthday = $form->add(
-    new Field_Date('birthday', 'Birthday', null, null, time())
+    new Date('birthday', 'Birthday', null, null, time())
 );
 $genders = array('male','female');
 $gender = $form->add(
-    new Field_Input_Select(
+    new Select(
         'gender', $genders, 'Gender', false, false
     )
 );
-$email = $form->add(new Field_Input_Text('email', 'Email'));
+$email = $form->add(new Text('email', 'Email'));
 $email->setCallback(
-    function (Field_Input_Text $email) {
+    function (Text $email) {
         return filter_var($email->getValue(), FILTER_VALIDATE_EMAIL) !== false;
     }
 );
-$blog = $form->add(new Field_Input_Text('blog', 'Blog'));
+$blog = $form->add(new Text('blog', 'Blog'));
 $blog->setCallback(
-    function (Field_Input_Text $website) {
+    function (Text $website) {
         return filter_var($website->getValue(), FILTER_VALIDATE_URL) !== false;
     }
 );
-$form->add(new Field_Submit('submit', 'Submit'));
-$start = $form->add(new Field_Input_Hidden('start', time()));
+$form->add(new Submit('submit', 'Submit'));
+$start = $form->add(new Hidden('start', time()));
 $resume = $form->add(
-    new Field_File(
+    new File(
         'resume', 'Resume', null, null, array('odt','doc','docx','pdf','txt')
     ), false
 );
 $avatar = $form->add(
-    new Field_File_Image(
+    new Image(
         'avatar', 'Avatar', null, null, null, null, 100, 100, true
     ), false
 );

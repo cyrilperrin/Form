@@ -2,6 +2,10 @@
 
 namespace CyrilPerrin\Form;
 
+use CyrilPerrin\Form\Field\Sequence;
+use CyrilPerrin\Form\Field\Submit;
+use CyrilPerrin\Form\Field\Input\Hidden;
+
 /**
  * Class to extend to be considered as a form renderer
  */
@@ -24,7 +28,7 @@ abstract class FormRenderer
 
         // Display hidden fields
         foreach ($form->getFields() as $field) {
-            if ($field instanceof Field_Input_Hidden) {
+            if ($field instanceof Hidden) {
                 $string .= $field->__toString();
             }
         }
@@ -33,9 +37,9 @@ abstract class FormRenderer
         $groups = array();
         foreach ($form->getFields() as $field) {
             // Add field to group
-            if (!($field instanceof Field_Input_Hidden) &&
-                !($field instanceof Field_Sequence) &&
-                !($field instanceof Field_Submit) &&
+            if (!($field instanceof Hidden) &&
+                !($field instanceof Sequence) &&
+                !($field instanceof Submit) &&
                 ($names = $form->getGroup($field)) !== null) {
                 $group =& $groups;
                 while (count($names)) {
@@ -55,9 +59,9 @@ abstract class FormRenderer
         // Display fields
         $done = array();
         foreach ($form->getFields() as $field) {
-            if (!($field instanceof Field_Input_Hidden) &&
-                !($field instanceof Field_Sequence) &&
-                !($field instanceof Field_Submit)) {
+            if (!($field instanceof Hidden) &&
+                !($field instanceof Sequence) &&
+                !($field instanceof Submit)) {
                 // Display field or group
                 if (($names = $form->getGroup($field)) === null) {
                     // Start list
@@ -96,7 +100,7 @@ abstract class FormRenderer
 
         // Display submit fields
         foreach ($form->getFields() as $field) {
-            if ($field instanceof Field_Submit) {
+            if ($field instanceof Submit) {
                 $string .= $field->__toString();
             }
         }

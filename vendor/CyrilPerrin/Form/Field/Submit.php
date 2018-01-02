@@ -1,11 +1,14 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Form;
 
 /**
  * Form submit
  */
-class Field_Submit extends Field
+class Submit extends Field
 {
     /** @var $_text string text */
     private $_text;

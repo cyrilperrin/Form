@@ -1,11 +1,14 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Form;
 
 /**
  * Class to extend to become a form input
  */
-abstract class Field_Input extends Field
+abstract class Input extends Field
 {
     /** @var $_value string value */
     protected $_value;

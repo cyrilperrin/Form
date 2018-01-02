@@ -1,11 +1,13 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
 
 /**
  * Form HTML
  */
-class Field_Html extends Field
+class Html extends Field
 {
     /** @var $_html string html */
     private $_html;

@@ -1,11 +1,15 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field\Input;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Form;
+use CyrilPerrin\Form\Field\Input;
 
 /**
  * Form select
  */
-class Field_Input_Select extends Field_Input
+class Select extends Input
 {
     /** @var  array values */
     private $_values;
@@ -48,7 +52,7 @@ class Field_Input_Select extends Field_Input
     }
     
     /**
-     * @see Field_Input::validate($method)
+     * @see Input::validate($method)
      */
     public function validate($method)
     {
@@ -77,7 +81,7 @@ class Field_Input_Select extends Field_Input
     }
     
     /**
-     * @see Field_Input::setValue()
+     * @see Input::setValue()
      */
     public function setValue($value)
     {

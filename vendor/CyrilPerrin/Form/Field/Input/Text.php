@@ -1,11 +1,14 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field\Input;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Field\Input;
 
 /**
  * Form text
  */
-class Field_Input_Text extends Field_Input
+class Text extends Input
 {
     // Types
     const TYPE_MONOLINE = 1;
@@ -36,7 +39,7 @@ class Field_Input_Text extends Field_Input
      * @param $attributes string initial HTML attributes
      */
     public function __construct($name,$description=null,
-        $type=Field_Input_Text::TYPE_MONOLINE,$inputSize=null,$textSize=null,
+        $type=self::TYPE_MONOLINE,$inputSize=null,$textSize=null,
         $init=null,$placeholder=null,$attributes=null)
     {
         // Call parent constructor
@@ -66,7 +69,7 @@ class Field_Input_Text extends Field_Input
     }
     
     /**
-     * @see Field_Input::setValue($value)
+     * @see Input::setValue($value)
      */
     public function setValue($value)
     {

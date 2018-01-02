@@ -1,16 +1,19 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Form;
 
 /**
  * Form sequence
  */
-class Field_Sequence extends Field
+class Sequence extends Field
 {
     /** @var $_regexp string regular expression */
     private $_regexp;
     
-    /** @var $_callback callback fields provider */
+    /** @var $_callback callable callback fields provider */
     private $_callback;
     
     /** @var $_fields array fields */
@@ -20,7 +23,7 @@ class Field_Sequence extends Field
      * Constructor
      * @param $name string name
      * @param $regexp string regular expression
-     * @param $callback callback field provider
+     * @param $callback callable callback field provider
      */
     public function __construct($name,$regexp,$callback)
     {
@@ -74,7 +77,7 @@ class Field_Sequence extends Field
     /**
      * Is matching name to regular expression ?
      * @param $name string name
-     * @return maching name to regular expression ?
+     * @return boolean maching name to regular expression ?
      */
     public function isMatchingName($name)
     {

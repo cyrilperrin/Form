@@ -1,11 +1,15 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\FormRenderer;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Form;
+use CyrilPerrin\Form\FormRenderer;
 
 /**
  * Form renderer with labels
  */
-class FormRenderer_Labels extends FormRenderer
+class Labels extends FormRenderer
 {
     /**
      * @see FormRenderer#renderField(Form,Field)

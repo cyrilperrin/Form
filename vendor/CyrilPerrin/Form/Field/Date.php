@@ -1,23 +1,26 @@
 <?php
 
-namespace CyrilPerrin\Form;
+namespace CyrilPerrin\Form\Field;
+
+use CyrilPerrin\Form\Field;
+use CyrilPerrin\Form\Field\Input\Select;
 
 /**
  * Form date
  */
-class Field_Date extends Field
+class Date extends Field
 {
     // Formats
     const FORMAT_YYYY_MM_DD = 1;
     const FORMAT_DD_MM_YYYY = 2;
     
-    /** @var $_selectDay Field_Input_Select day select */
+    /** @var $_selectDay Select day select */
     private $_selectDay;
     
-    /** @var $_selectMonth Field_Input_Select month select */
+    /** @var $_selectMonth Select month select */
     private $_selectMonth;
     
-    /** @var $_selectYear Field_Input_Select year select */
+    /** @var $_selectYear Select year select */
     private $_selectYear;
     
     /** @var $_min int minimum timestamp */
@@ -40,7 +43,7 @@ class Field_Date extends Field
      * @param $attributes string initial HTML attributes
      */
     public function __construct($name,$description=null,$init=null,$min=null,
-        $max=null,$format=Field_Date::FORMAT_YYYY_MM_DD,$attributes=null)
+        $max=null,$format=Date::FORMAT_YYYY_MM_DD,$attributes=null)
     {
         // Call parent constructor
         parent::__construct($name, $description, $attributes, $init);
@@ -70,7 +73,7 @@ class Field_Date extends Field
         for ($i=$yearFrom;$i<=$yearTo;++$i) {
             $years[$i] = $i; 
         }
-        $this->_selectYear = new Field_Input_Select(
+        $this->_selectYear = new Select(
             $name.'_year', $years, null, false, true, null, $initYear
         );
         
@@ -79,7 +82,7 @@ class Field_Date extends Field
         for ($i=1;$i<=12;++$i) {
             $months[$i] = str_pad($i, 2, 0, STR_PAD_LEFT); 
         }
-        $this->_selectMonth = new Field_Input_Select(
+        $this->_selectMonth = new Select(
             $name.'_month', $months, null, false, true, null, $initMonth
         );
         
@@ -88,7 +91,7 @@ class Field_Date extends Field
         for ($i=1;$i<=31;++$i) {
             $days[$i] = str_pad($i, 2, 0, STR_PAD_LEFT); 
         }
-        $this->_selectDay = new Field_Input_Select(
+        $this->_selectDay = new Select(
             $name.'_day', $days, null, false, true, null, $initDay
         );
     }
@@ -170,7 +173,7 @@ class Field_Date extends Field
 
     /**
      * Get day select
-     * @return Field_Input_Select
+     * @return Select
      */
     public function getSelectDay()
     {
@@ -179,7 +182,7 @@ class Field_Date extends Field
     
     /**
      * Get month select
-     * @return Field_Input_Select
+     * @return Select
      */
     public function getSelectMonth()
     {
@@ -188,7 +191,7 @@ class Field_Date extends Field
     
     /**
      * Get year select
-     * @return Field_Input_Select
+     * @return Select
      */
     public function getSelectYear()
     {
